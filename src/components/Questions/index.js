@@ -1,81 +1,83 @@
-import { Button, FormControlLabel, Input, MenuItem, Radio, RadioGroup, Select } from "@mui/material";
+import { Button, FormControl, FormControlLabel, Input, Radio, RadioGroup } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import './index.css'
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import { useDispatch } from "react-redux";
+import containerSlice from "../Container/containerSlice";
 
 
 
-const Question = ({ question }) => {
+const Question = ({ question, editId, setEditId }) => {
     const [questionName, setQuestionName] = useState('');
     const [typeQuestion, setTypeQuestion] = useState('1');
-    console.log("check question", question);
+
+
+    const dispatch = useDispatch();
+
+    // console.log("check question @", question);
     useEffect(() => {
         setQuestionName(question.name)
         setTypeQuestion(question.type)
-    })
+    }, [question])
 
-    const handleQuestionName = (e) => {
-        setQuestionName(e.target.value)
-        console.log("questionname: ", e.target.value);
-    }
-
-    const handleChangeTypeQuestion = (e) => {
-        setTypeQuestion(e.target.value)
-        console.log("type:", e.target.value);
+    const handleDeleteQuestion = (id) => {
+        console.log("check id: ", id);
+        dispatch(containerSlice.actions.deleteQuestion({ id }))
     }
 
     const checkTypeQuestion = () => {
         if (typeQuestion === '1') {
             return (
                 <div>
-                    <Input placeholder='Nhập đoạn' value={question.description} />
+                    <Input style={{ marginTop: '10px' }} placeholder='Nhập câu trả lời' />
                 </div>
             )
         }
         else if (typeQuestion === '2') {
-            const handleAddChoose = () => {
-                return (
-                    <FormControlLabel control={<Radio />} label="monkey" />
-                )
-            }
 
             return (
                 <div>
-                    <RadioGroup >
-                        <FormControlLabel control={<Radio />} label="monkey" />
-                        <FormControlLabel control={<Radio />} label="dragon" />
-                        <FormControlLabel control={<Radio />} label="lion" />
-                        <FormControlLabel control={<Radio />} label="dog" />
-
-                    </RadioGroup>
-                    <Button onlick={handleAddChoose}>Add Choose</Button>
+                    <FormControl>
+                        <RadioGroup >
+                            {
+                                question.options.map((option) => (
+                                    <div className="option" key={option.key}>
+                                        <FormControlLabel control={<Radio checked={false} />} value={option.key} label={option.name} />
+                                    </div>
+                                )
+                                )
+                            }
+                        </RadioGroup>
+                    </FormControl>
                 </div>
             )
         }
     }
+
+    const handleChangeEditId = (id) => {
+        setEditId(id)
+    }
+
     return (
 
-        <div className="question">
-            {/* <Input className="input-title" placeholder='Nhập tiêu đề' value={questionTitle} /> */}
-            <div className="container-question">
+        <div className="question-2">
 
-                <Input className="input-question" placeholder='Nhập câu hỏi' value={questionName} onChange={handleQuestionName} />
+            <div className="container-question-2">
 
-                <Select
-
-                    style={{ width: '200px' }}
-                    className="select-type"
-                    value={typeQuestion}
-                    onChange={handleChangeTypeQuestion}
-
-                >
-                    <MenuItem value='1'>Đoạn</MenuItem>
-                    <MenuItem value='2'>Trắc nghiệm</MenuItem>
-
-                </Select>
-
+                <div className="question-name">{questionName}</div>
 
             </div>
             {checkTypeQuestion()}
+            <div>
+                <Button style={{ marginLeft: '81%' }} onClick={() => handleChangeEditId(question.id)}>
+                    <EditIcon color="action" />
+                </Button>
+                <Button onClick={() => handleDeleteQuestion(question.id)}>
+                    <DeleteIcon color="action" />
+                </Button>
+
+            </div>
 
         </div >
 

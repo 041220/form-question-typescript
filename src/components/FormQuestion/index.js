@@ -1,80 +1,100 @@
-import { Button, FormControl, FormControlLabel, Input, MenuItem, Radio, RadioGroup, Select } from "@mui/material";
-import React, { useState } from "react";
+import { Button, Input, MenuItem, Radio, RadioGroup, Select } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { v4 } from "uuid";
 import containerSlice from "../Container/containerSlice";
 import './index.css'
+import AddIcon from '@mui/icons-material/Add';
+import ClearIcon from '@mui/icons-material/Clear';
 
-
-const FormQuestion = ({ question }) => {
+const FormQuestion = ({ editId, setEditId, question }) => {
     const [questionName, setQuestionName] = useState('');
-    const [typeQuestion, setTypeQuestion] = useState('1');
-    const [description, setDescription] = useState('');
-    const [option, setOption] = useState([]);
+    const [options, setOptions] = useState([]);
+    const [typeQuestion, setTypeQuestion] = useState('1')
 
     const dispatch = useDispatch();
+    console.log("checkLOG:", question);
+
+    useEffect(() => {
+        setQuestionName(question?.name || '')
+        setTypeQuestion(question?.type || '1')
+        setOptions(question?.options || [])
+    }, [question])
 
     const handleAddNewQuestion = () => {
         dispatch(
             containerSlice.actions.addNewQuestion({
                 id: v4(),
-                isEdit: false,
                 name: questionName,
                 type: typeQuestion,
-                ...(typeQuestion === '1' && { description, }),
-                ...(typeQuestion === '2' && { option, })
+                ...(typeQuestion === '2' && { options })
 
             }))
         setQuestionName('');
-        setDescription('');
+        setOptions([]);
     }
-    console.log("description", description);
-    // const handleQuestionTitle = (e) => {
-    //     setQuestionTitle(e.target.value)
-    //     console.log("title-question: ", e.target.value);
-    // }
-    const handleChangeText = (e) => {
-        setDescription(e.target.value)
+    const handleEditQuestion = () => {
+        dispatch(
+            containerSlice.actions.editQuestion({
+                id: editId, data: { id: editId, name: questionName, type: typeQuestion, options }
+            }))
+        setEditId(undefined)
     }
+
     const handleQuestionName = (e) => {
         setQuestionName(e.target.value)
         console.log("questionname: ", e.target.value);
     }
-
     const handleChangeTypeQuestion = (e) => {
         setTypeQuestion(e.target.value)
         console.log("type:", e.target.value);
     }
 
+    const handleAddOption = () => {
+        setOptions([...options, { key: v4(), name: '' }])
+
+    }
+    const handleDeleteOption = (key) => {
+        setOptions(options.filter(option => (option.key !== key)))
+    }
+    const handleChangeOption = (key, event) => {
+        setOptions(options.map(option => (option.key === key
+            ? { ...option, name: event.target.value }
+            : { ...option }
+        )))
+    }
+    console.log("option", options);
     const checkTypeQuestion = () => {
         if (typeQuestion === '1') {
             return (
                 <div>
-                    <Input placeholder='Nhập đoạn' value={description} onChange={handleChangeText} />
+                    <Input style={{ marginTop: '10px' }} placeholder='Nhập câu trả lời' />
                 </div>
             )
         }
         else if (typeQuestion === '2') {
-            const handleAddChoose = () => {
-                return (
-                    <FormControlLabel control={<Radio />} label="monkey" />
-                )
-            }
 
             return (
                 <div>
                     <RadioGroup >
-                        <FormControlLabel control={<Radio />} label="monkey" />
-                        <FormControlLabel control={<Radio />} label="dragon" />
-                        <FormControlLabel control={<Radio />} label="lion" />
-                        <FormControlLabel control={<Radio />} label="dog" />
+
+                        {
+                            options.map(option => (
+                                <div key={option.key}>
+                                    <Radio checked={false} /> <Input value={option.name} onChange={(event) => handleChangeOption(option.key, event)} />
+                                    <Button onClick={() => handleDeleteOption(option.key)}><ClearIcon color="action" /></Button>
+                                </div>
+                            ))
+                        }
 
                     </RadioGroup>
-                    <Button onlick={handleAddChoose}>Add Choose</Button>
+                    <Button onClick={handleAddOption}><AddIcon />Option</Button>
                 </div>
             )
         }
     }
+
+
     return (
 
         <div className="question">
@@ -100,8 +120,9 @@ const FormQuestion = ({ question }) => {
             </div>
             {checkTypeQuestion()}
 
-            <Button style={{ marginTop: '30px' }} onClick={handleAddNewQuestion} >
-                Add
+
+            <Button style={{ marginTop: '30px' }} onClick={editId ? handleEditQuestion : handleAddNewQuestion} >
+                {editId ? 'Update' : 'Add'}
             </Button>
 
 

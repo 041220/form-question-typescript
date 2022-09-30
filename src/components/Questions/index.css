@@ -1,17 +1,21 @@
-.container-question {
+.container-question-2 {
     display: flex;
     column-gap: 10px;
 
 }
 
 
-.input-question {
+.input-question-2 {
 
     flex: 1;
 
 }
 
-.question {
+.question-name {
+    margin-bottom: 15px;
+}
+
+.question-2 {
     width: 700px;
     margin: 0 auto;
     background-color: white;
@@ -19,10 +23,4 @@
     box-shadow: 0 0 10px 4px #bfbfbf;
     border-radius: 5px;
     margin-top: 30px;
-}
-
-.select-type {
-    margin-top: 20px;
-    display: flex;
-
 }
