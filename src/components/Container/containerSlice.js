@@ -7,21 +7,15 @@ const saveQuestionsToStorage = (questions, title, description) => {
 
     }
 }
-// const saveTitleToStorage = (title) => {
-//     try {
-//         localStorage.setItem("questionList",JSON.stringify(title))
-//     } catch (err) {
-
-//     }
-// }
 
 const containerSlice = createSlice({
     name: 'questionList',
     initialState: {
         title: '',
         description: '',
-        questions: []
-    },
+        questions: [],
+    }
+    ,
     reducers: {
         titleQuestion: (state, action) => {
             state.title = action.payload.title;
@@ -47,14 +41,9 @@ const containerSlice = createSlice({
             )
             saveQuestionsToStorage(state.questions)
         },
-        // deleteOption: (state, action) => {
-        //     console.log("action.payload:", action.payload);
-        //     console.log("state.option", state.options);
-        //     let currentOption = state.questions.filter(option => option.key !== action.payload.key)
-        //     state.options = currentOption;
-        // },
+
         deleteQuestion: (state, action) => {
-            let currentQuestion = state.questions.filter(question => question.id !== action.payload.id)
+            let currentQuestion = state.questions.filter(question => question.id !== action.payload)
             state.questions = currentQuestion;
             saveQuestionsToStorage(state.questions)
 

@@ -23,7 +23,7 @@ const Question = ({ question, editId, setEditId }) => {
 
     const handleDeleteQuestion = (id) => {
         console.log("check id: ", id);
-        dispatch(containerSlice.actions.deleteQuestion({ id }))
+        dispatch(containerSlice.actions.deleteQuestion(id))
     }
 
     const checkTypeQuestion = () => {

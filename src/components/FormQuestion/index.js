@@ -33,6 +33,7 @@ const FormQuestion = ({ editId, setEditId, question }) => {
         setQuestionName('');
         setOptions([]);
     }
+
     const handleEditQuestion = () => {
         dispatch(
             containerSlice.actions.editQuestion({
@@ -73,11 +74,9 @@ const FormQuestion = ({ editId, setEditId, question }) => {
             )
         }
         else if (typeQuestion === '2') {
-
             return (
                 <div>
                     <RadioGroup >
-
                         {
                             options.map(option => (
                                 <div key={option.key}>
@@ -86,45 +85,35 @@ const FormQuestion = ({ editId, setEditId, question }) => {
                                 </div>
                             ))
                         }
-
                     </RadioGroup>
                     <Button onClick={handleAddOption}><AddIcon />Option</Button>
                 </div>
             )
         }
     }
-
-
     return (
 
         <div className="question">
             {/* <Input className="input-title" placeholder='Nhập tiêu đề' value={questionTitle} /> */}
             <div className="container-question">
-
                 <Input className="input-question" placeholder='Nhập câu hỏi' value={questionName} onChange={handleQuestionName} />
-
                 <Select
-
                     style={{ width: '200px' }}
                     className="select-type"
                     value={typeQuestion}
                     onChange={handleChangeTypeQuestion}
-
                 >
                     <MenuItem value='1'>Đoạn</MenuItem>
                     <MenuItem value='2'>Trắc nghiệm</MenuItem>
-
                 </Select>
 
-
             </div>
-            {checkTypeQuestion()}
 
+            {checkTypeQuestion()}
 
             <Button style={{ marginTop: '30px' }} onClick={editId ? handleEditQuestion : handleAddNewQuestion} >
                 {editId ? 'Update' : 'Add'}
             </Button>
-
 
         </div >
 
