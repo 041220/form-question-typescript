@@ -7,8 +7,8 @@ import { useSelector } from 'react-redux';
 
 function App() {
 
-  const Data = useSelector(state => state.formList)
-  console.log("Data", Data.list);
+  const Data = useSelector(state => state.formList.list)
+  console.log("Data", Data);
 
 
   return (
