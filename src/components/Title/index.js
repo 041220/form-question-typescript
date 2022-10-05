@@ -5,19 +5,17 @@ import containerSlice from "../Container/containerSlice";
 import './index.css'
 
 
-const Title = () => {
+const Title = ({ formDescription, formTitle }) => {
 
     const [inputTitle, setInputTitle] = useState("")
     const [description, setDescription] = useState("")
 
-    const getData = useSelector(state => state.questionList)
-    console.log("checkGetData", getData.questionList);
     const dispatch = useDispatch();
 
     useEffect(() => {
-        setInputTitle(getData.title)
-        setDescription(getData.description)
-    }, [getData])
+        setInputTitle(formTitle)
+        setDescription(formDescription)
+    }, [formDescription, formTitle])
 
 
     const handleInputTitle = (e) => {

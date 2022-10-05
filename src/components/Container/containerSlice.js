@@ -1,12 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const saveQuestionsToStorage = (questions, title, description) => {
-    try {
-        localStorage.setItem("questionList", JSON.stringify({ questions, title, description }));
-    } catch (err) {
+// const saveQuestionsToStorage = (questions, title, description) => {
+//     try {
+//         localStorage.setItem("questionList", JSON.stringify({ questions, title, description }));
+//     } catch (err) {
 
-    }
-}
+//     }
+// }
 
 const containerSlice = createSlice({
     name: 'questionList',
@@ -20,12 +20,12 @@ const containerSlice = createSlice({
         titleQuestion: (state, action) => {
             state.title = action.payload.title;
             state.description = action.payload.description;
-            saveQuestionsToStorage(state.questions, state.title, state.description)
+            // saveQuestionsToStorage(state.questions, state.title, state.description)
 
         },
         addNewQuestion: (state, action) => {
             state.questions.push(action.payload)
-            saveQuestionsToStorage(state.questions)
+            // saveQuestionsToStorage(state.questions)
         },
         editQuestion: (state, action) => {
             // console.log("action.payload:", action.payload);
@@ -39,16 +39,21 @@ const containerSlice = createSlice({
             }
 
             )
-            saveQuestionsToStorage(state.questions)
+            // saveQuestionsToStorage(state.questions)
         },
 
         deleteQuestion: (state, action) => {
             let currentQuestion = state.questions.filter(question => question.id !== action.payload)
             state.questions = currentQuestion;
-            saveQuestionsToStorage(state.questions)
+            // saveQuestionsToStorage(state.questions)
 
         },
-        getDataLocal: (state, action) => {
+        resetForm: (state) => {
+            state.title = ''
+            state.description = ''
+            state.questions = []
+        },
+        getData: (state, action) => {
             console.log(action.payload);
             state.questions = action.payload.questions;
             state.title = action.payload.title;

@@ -17,6 +17,20 @@ const homeSlice = createSlice({
             state.list.push(action.payload)
             saveFormToLocalStorage(state.list)
         },
+
+        editForm: (state, action) => {
+            console.log("action.paylaod2", action.payload);
+
+            state.list = state.list.map((item) => {
+                return (
+                    item.id === action.payload.id
+                        ? { ...item, ...action.payload.data }
+                        : { ...item }
+                )
+            })
+            console.log("state.list", state.list);
+            saveFormToLocalStorage(state.list)
+        },
         deleteForm: (state, action) => {
             console.log('action.payload:', action.payload);
             const currentForm = state.list.filter(form => form.id !== action.payload)

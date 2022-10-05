@@ -21,6 +21,7 @@ const FormQuestion = ({ editId, setEditId, question }) => {
         setOptions(question?.options || [])
     }, [question])
 
+    //dispatch tạo mới 1 question
     const handleAddNewQuestion = () => {
         dispatch(
             containerSlice.actions.addNewQuestion({
@@ -34,6 +35,7 @@ const FormQuestion = ({ editId, setEditId, question }) => {
         setOptions([]);
     }
 
+    //dispatch dữ liệu question đã chỉnh sửa 
     const handleEditQuestion = () => {
         dispatch(
             containerSlice.actions.editQuestion({
@@ -50,11 +52,12 @@ const FormQuestion = ({ editId, setEditId, question }) => {
         setTypeQuestion(e.target.value)
         console.log("type:", e.target.value);
     }
-
+    //Tạo thêm option trong câu hỏi trắc nghiệm
     const handleAddOption = () => {
         setOptions([...options, { key: v4(), name: '' }])
 
     }
+    //Xóa option trong câu hỏi trắc nghiệm
     const handleDeleteOption = (key) => {
         setOptions(options.filter(option => (option.key !== key)))
     }
@@ -65,6 +68,8 @@ const FormQuestion = ({ editId, setEditId, question }) => {
         )))
     }
     console.log("option", options);
+
+    //Kiểm tra câu hỏi có type gì
     const checkTypeQuestion = () => {
         if (typeQuestion === '1') {
             return (

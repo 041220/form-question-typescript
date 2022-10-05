@@ -20,22 +20,19 @@ const Question = ({ question, editId, setEditId }) => {
         setQuestionName(question.name)
         setTypeQuestion(question.type)
     }, [question])
-
+    // Delete 1 question 
     const handleDeleteQuestion = (id) => {
         console.log("check id: ", id);
         dispatch(containerSlice.actions.deleteQuestion(id))
     }
-
+    //check type của question
     const checkTypeQuestion = () => {
         if (typeQuestion === '1') {
             return (
-                <div>
-                    <Input style={{ marginTop: '10px' }} placeholder='Nhập câu trả lời' />
-                </div>
+                <div><Input style={{ marginTop: '10px' }} placeholder='Nhập câu trả lời' /></div>
             )
         }
         else if (typeQuestion === '2') {
-
             return (
                 <div>
                     <FormControl>
