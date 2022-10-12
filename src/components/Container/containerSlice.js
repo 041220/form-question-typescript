@@ -36,9 +36,7 @@ const containerSlice = createSlice({
                         ? { ...item, ...action.payload.data }
                         : { ...item }
                 )
-            }
-
-            )
+            })
             // saveQuestionsToStorage(state.questions)
         },
 
@@ -46,7 +44,6 @@ const containerSlice = createSlice({
             let currentQuestion = state.questions.filter(question => question.id !== action.payload)
             state.questions = currentQuestion;
             // saveQuestionsToStorage(state.questions)
-
         },
         resetForm: (state) => {
             state.title = ''
@@ -55,12 +52,12 @@ const containerSlice = createSlice({
         },
         getData: (state, action) => {
             console.log(action.payload);
-            state.questions = action.payload.questions;
-            state.title = action.payload.title;
-            state.description = action.payload.description;
+            state.questions = action.payload?.questions;
+            state.title = action.payload?.title;
+            state.description = action.payload?.description;
 
         },
-
+      
 
     }
 })

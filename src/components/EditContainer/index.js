@@ -17,13 +17,13 @@ const ContainerEdit = () => {
 
     const questionList = useSelector(state => state.questionList); //Lấy data của 1 form đã lưu ở store 
     const dataFormList = useSelector(state => state.formList.list); //Lấy data của các form ở store
-    console.log("questionList:", questionList);
+    console.log("dataFormList", dataFormList);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const param = useParams();
-    console.log("param:", param);
+    console.log("param:", param); //truy xuất param trên url
     //Lấy ra data của form cần view
     const dataForm = useMemo(() => {
         return (
@@ -31,7 +31,7 @@ const ContainerEdit = () => {
         )
     }, [param, dataFormList])
 
-    //dispatch dữ liệu vào 
+    //dispatch dữ liệu của form hiện thời vào store
     useEffect(() => {
         dispatch(containerSlice.actions.getData(dataForm))
     }, [dispatch, dataForm])
@@ -49,7 +49,6 @@ const ContainerEdit = () => {
         dispatch(homeSlice.actions.editForm({
             id: dataForm?.id, data: { ...questionList }
         }))
-
         navigate("/")
     }
     return (
@@ -79,14 +78,14 @@ const ContainerEdit = () => {
 
 
             {//map questions của 1 form đang edit ra
-                questionList.questions.map(question => {
+                questionList.questions?.map((question, index) => {
                     return (
 
                         <>
                             {
                                 editId === question.id
                                     ? <FormQuestion editId={editId} setEditId={setEditId} question={question} />
-                                    : <Question key={question.id} question={question} setEditId={setEditId} />
+                                    : <Question index={index} key={question.id} question={question} setEditId={setEditId} />
 
                             }
                         </>

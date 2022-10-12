@@ -18,12 +18,6 @@ const Home = () => {
 
     console.log("list:", list);
 
-    useEffect(() => {
-        const getDataForm = localStorage.getItem("formList") //Lấy data các form từ Local Storage 
-        if (getDataForm) {
-            dispatch(homeSlice.actions.getDataFormLocal(JSON.parse(getDataForm))) //dispatch data vừa lấy từ local vào store
-        }
-    }, [dispatch])
 
     //Tạo mới 1 form
     const handleAddNewForm = () => {
@@ -34,9 +28,16 @@ const Home = () => {
     const handleViewOneForm = (id) => {
         navigate(`/edit/${id}`)
     }
+    //Làm 1 bài trong 1 form
+    const handleDoTheTopic = (id) => {
+        navigate(`/formInProgress/${id}`)
+    }
     //Delete 1 form
     const handleDeleteForm = (id) => {
         dispatch(homeSlice.actions.deleteForm(id))
+    }
+    const handleViewAnswers = (id) => {
+        navigate(`/answers/${id}`)
     }
 
     return (
@@ -59,7 +60,7 @@ const Home = () => {
                 list?.map(form => {
                     return (
 
-                        <Card className="form-list" key={form.id}>
+                        <Card style={{ paddingLeft: '40px', paddingBottom: '-20px' }} className="form-list" key={form.id}>
                             <CardContent>
                                 <Typography style={{ marginBottom: '10px' }} sx={{ fontSize: 23 }}>
                                     {form.title}
@@ -70,8 +71,9 @@ const Home = () => {
 
                                 <CardActions >
                                     <Button onClick={() => handleViewOneForm(form.id)}> View Form </Button>
-
-                                    <Button style={{ marginLeft: '70%' }} onClick={() => handleDeleteForm(form.id)}> <DeleteIcon color="action" /> </Button>
+                                    <Button onClick={() => handleDoTheTopic(form.id)}>Do The Topic</Button>
+                                    <Button onClick={() => handleViewAnswers(form.id)}> View Answers</Button>
+                                    <Button style={{ marginLeft: '40%' }} onClick={() => handleDeleteForm(form.id)}> <DeleteIcon color="action" /> </Button>
                                 </CardActions>
 
                             </CardContent>

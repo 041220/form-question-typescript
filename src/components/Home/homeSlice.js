@@ -10,17 +10,14 @@ const homeSlice = createSlice({
     name: 'formList',
     initialState: {
         list: [],
-
     },
     reducers: {
         addNewForm: (state, action) => {
             state.list.push(action.payload)
             saveFormToLocalStorage(state.list)
         },
-
         editForm: (state, action) => {
             console.log("action.paylaod2", action.payload);
-
             state.list = state.list.map((item) => {
                 return (
                     item.id === action.payload.id
@@ -37,8 +34,19 @@ const homeSlice = createSlice({
             state.list = currentForm
             saveFormToLocalStorage(state.list)
         },
+        submitForm: (state, action) => {
+            state.list = state.list.map((item) => {
+                return (
+                    item.id === action.payload.id
+                        ? { ...item, ...action.payload.data }
+                        : { ...item }
+                )
+            })
+            saveFormToLocalStorage(state.list)
+        },
         getDataFormLocal: (state, action) => {
             state.list = action.payload
+            console.log("action.payload:", action.payload);
         }
 
     }

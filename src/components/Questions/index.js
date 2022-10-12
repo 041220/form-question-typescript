@@ -8,7 +8,7 @@ import containerSlice from "../Container/containerSlice";
 
 
 
-const Question = ({ question, editId, setEditId }) => {
+const Question = ({ question, editId, setEditId, index }) => {
     const [questionName, setQuestionName] = useState('');
     const [typeQuestion, setTypeQuestion] = useState('1');
 
@@ -40,7 +40,7 @@ const Question = ({ question, editId, setEditId }) => {
                             {
                                 question.options.map((option) => (
                                     <div className="option" key={option.key}>
-                                        <FormControlLabel control={<Radio checked={false} />} value={option.key} label={option.name} />
+                                        <FormControlLabel control={<Radio />} value={option.key} label={option.name} />
                                     </div>
                                 )
                                 )
@@ -62,7 +62,7 @@ const Question = ({ question, editId, setEditId }) => {
 
             <div className="container-question-2">
 
-                <div className="question-name">{questionName}</div>
+                <div className="question-name">Question {index + 1}: {questionName}</div>
 
             </div>
             {checkTypeQuestion()}

@@ -62,13 +62,13 @@ const Container = () => { //Component tạo 1 form mới
                 <FormQuestion />
             </Modal>
             {
-                questionList.questions.map(question => {
+                questionList.questions.map((question, index) => {
                     return (
                         <>
                             {
                                 editId === question.id
                                     ? <FormQuestion editId={editId} setEditId={setEditId} question={question} />
-                                    : <Question key={question.id} question={question} setEditId={setEditId} />
+                                    : <Question index={index} key={question.id} question={question} setEditId={setEditId} />
 
                             }
                         </>

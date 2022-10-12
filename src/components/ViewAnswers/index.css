@@ -1,0 +1,23 @@
+.title-view-answer {
+    width: 700px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 0 10px 4px #bfbfbf;
+    border-radius: 5px;
+    margin-top: 50px;
+    margin-bottom: 40px;
+    border-top: 10px solid rgb(97, 16, 129);
+}
+
+.view-answer {
+    width: 700px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 0 10px 4px #bfbfbf;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
