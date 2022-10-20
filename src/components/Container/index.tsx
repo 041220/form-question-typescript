@@ -9,13 +9,16 @@ import homeSlice from "../Home/homeSlice";
 import { v4 } from "uuid";
 import { useNavigate } from "react-router-dom";
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
+import { Questions } from "../type";
 
-const Container = () => { //Component tạo 1 form mới
 
-    const [editId, setEditId] = useState(undefined);
-    const [open, setOpen] = useState(false);
 
-    const questionList = useSelector(state => state.questionList); //Lấy data question hiện thời trong store
+const Container: React.FC = () => { //Component tạo 1 form mới
+
+    const [editId, setEditId] = useState<any>(undefined);
+    const [open, setOpen] = useState<boolean>(false);
+
+    const questionList = useSelector((state: any) => state.questionList); //Lấy data question hiện thời trong store
     console.log("questionList", questionList);
 
     const dispatch = useDispatch();
@@ -39,7 +42,7 @@ const Container = () => { //Component tạo 1 form mới
 
     return (
         <div>
-            <Title />
+            <Title formDescription={""} formTitle={""} />
             <div style={{ marginRight: '1000px', position: 'sticky', top: 0 }}>
                 <div style={{ display: 'flex', flexDirection: 'column', boxShadow: '0 0 10px 1px #bfbfbf', width: '64px', marginLeft: '55%' }}>
                     <Button
@@ -59,10 +62,12 @@ const Container = () => { //Component tạo 1 form mới
                 open={open}
                 onClose={handleCloseForm}
             >
-                <FormQuestion />
+                <FormQuestion editId={undefined} setEditId={function (value: string | undefined): void {
+                    throw new Error("Function not implemented.");
+                }} question={undefined} />
             </Modal>
             {
-                questionList.questions.map((question, index) => {
+                (questionList.questions as Questions[]).map((question, index: number) => {
                     return (
                         <>
                             {

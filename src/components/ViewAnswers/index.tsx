@@ -6,10 +6,11 @@ import '../FormInProgress/index.css'
 import './index.css'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
-const ViewAnswers = () => {
+
+const ViewAnswers: React.FC = () => {
 
     const navigate = useNavigate();
-    const dataFormList = useSelector(state => state.formList.list); //Lấy data của các form ở store
+    const dataFormList = useSelector((state: any) => state.formList.list); //Lấy data của các form ở store
 
     console.log("dataFormList", dataFormList);
 
@@ -19,7 +20,7 @@ const ViewAnswers = () => {
     //Lấy ra data của form cần view
     const dataForm = useMemo(() => {
         return (
-            dataFormList.find((form) => form?.id === param?.FormId)
+            dataFormList.find((form: { id: string }) => form?.id === param?.FormId)
         )
     }, [param, dataFormList])
 
@@ -46,7 +47,7 @@ const ViewAnswers = () => {
                 </div>
             </div>
             {//map question and answers
-                dataForm?.questions?.map((question, index) => {
+                dataForm?.questions?.map((question: any, index: number) => {
                     console.log("checked", dataForm?.answers);
                     return (
                         <div className="view-answer">
@@ -54,7 +55,7 @@ const ViewAnswers = () => {
                                 Question {index + 1}: {question?.name}
                             </div>
                             <div>
-                                Answer: {dataForm?.answers?.find((item) => item?.id === question?.id)?.answer}
+                                Answer: {dataForm?.answers?.find((item: { id: string }) => item?.id === question?.id)?.answer}
                             </div>
 
                         </div>
@@ -62,7 +63,7 @@ const ViewAnswers = () => {
                     )
                 })
             }
-            <div style={{ width: "100%", height: "40px", bot: '0' }}></div>
+            {/* <div style={{ width: "100%", height: "40px", bot: "0" }}></div> */}
         </div>
     )
 

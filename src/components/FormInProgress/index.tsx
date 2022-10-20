@@ -6,13 +6,16 @@ import { useNavigate, useParams } from "react-router-dom";
 import './index.css'
 import QuestionsInProgress from "../QuestionsInProgress";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { Questions } from "../type";
+import { ListAnswer } from "../type";
 
-const FormInProgress = () => {
 
-    const [listAnswer, setListAnswer] = useState([])
+const FormInProgress: React.FC = () => {
 
-    const questionList = useSelector(state => state.questionList); //Lấy data của 1 form đã lưu ở store 
-    const dataFormList = useSelector(state => state.formList.list); //Lấy data của các form ở store
+    const [listAnswer, setListAnswer] = useState<ListAnswer[]>([])
+
+    const questionList = useSelector((state: any) => state.questionList); //Lấy data của 1 form đã lưu ở store 
+    const dataFormList = useSelector((state: any) => state.formList.list); //Lấy data của các form ở store
     console.log("dataFormList", dataFormList);
 
     const dispatch = useDispatch();
@@ -23,14 +26,14 @@ const FormInProgress = () => {
     //Lấy ra data của form cần view
     const dataForm = useMemo(() => {
         return (
-            dataFormList.find((form) => form?.id === param?.FormId)
+            dataFormList.find((form: { id: string }) => form?.id === param?.FormId)
         )
     }, [param, dataFormList])
 
     console.log('dataForm', dataForm);
 
     useEffect(() => {
-        setListAnswer(questionList?.questions?.map((item) => {
+        setListAnswer(questionList?.questions?.map((item: { id: string }) => {
             return (
                 { id: item.id }
             )
@@ -71,7 +74,7 @@ const FormInProgress = () => {
                 </div>
             </div>
             {//map questions của 1 form đang edit ra
-                questionList?.questions?.map((question, index) => {
+                (questionList?.questions as Questions[])?.map((question, index: number) => {
 
                     return (
                         <>

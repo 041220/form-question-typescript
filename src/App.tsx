@@ -1,12 +1,12 @@
 
 import './App.css';
 import Container from './components/Container';
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './components/Home';
 import ContainerEdit from './components/EditContainer';
 import DoTheTopic from './components/FormInProgress';
 import ViewAnswers from './components/ViewAnswers';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import homeSlice from './components/Home/homeSlice';
 import { useDispatch } from 'react-redux';
 

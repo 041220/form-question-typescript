@@ -9,14 +9,16 @@ import homeSlice from "../Home/homeSlice";
 import { useNavigate, useParams } from "react-router-dom";
 import containerSlice from "../Container/containerSlice";
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
+import { Questions } from "../type";
 
-const ContainerEdit = () => {
 
-    const [editId, setEditId] = useState(undefined);
+const ContainerEdit: React.FC = () => {
+
+    const [editId, setEditId] = useState<string | undefined>(undefined);
     const [open, setOpen] = useState(false);
 
-    const questionList = useSelector(state => state.questionList); //Lấy data của 1 form đã lưu ở store 
-    const dataFormList = useSelector(state => state.formList.list); //Lấy data của các form ở store
+    const questionList = useSelector((state: any) => state.questionList); //Lấy data của 1 form đã lưu ở store 
+    const dataFormList = useSelector((state: any) => state.formList.list); //Lấy data của các form ở store
     console.log("dataFormList", dataFormList);
 
     const dispatch = useDispatch();
@@ -27,7 +29,7 @@ const ContainerEdit = () => {
     //Lấy ra data của form cần view
     const dataForm = useMemo(() => {
         return (
-            dataFormList.find((form) => form?.id === param.FormId)
+            dataFormList.find((form: { id: string }) => form?.id === param.FormId)
         )
     }, [param, dataFormList])
 
@@ -73,12 +75,14 @@ const ContainerEdit = () => {
                 open={open}
                 onClose={handleCloseForm}
             >
-                <FormQuestion />
+                <FormQuestion editId={undefined} setEditId={function (value: string | undefined): void {
+                    throw new Error("Function not implemented.");
+                }} question={undefined} />
             </Modal>
 
 
             {//map questions của 1 form đang edit ra
-                questionList.questions?.map((question, index) => {
+                questionList.questions?.map((question: Questions, index: number) => {
                     return (
 
                         <>

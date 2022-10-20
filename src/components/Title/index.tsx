@@ -1,14 +1,16 @@
+
 import { Input } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import containerSlice from "../Container/containerSlice";
 import './index.css'
+import { TitleProps } from "./type";
 
 
-const Title = ({ formDescription, formTitle }) => {
+const Title: React.FC<TitleProps> = ({ formDescription, formTitle }) => {
 
-    const [inputTitle, setInputTitle] = useState("")
-    const [description, setDescription] = useState("")
+    const [inputTitle, setInputTitle] = useState<string>("")
+    const [description, setDescription] = useState<string>("")
 
     const dispatch = useDispatch();
 
@@ -18,13 +20,13 @@ const Title = ({ formDescription, formTitle }) => {
     }, [formDescription, formTitle])
 
 
-    const handleInputTitle = (e) => {
+    const handleInputTitle = (e: any) => {
 
         setInputTitle(e.target.value)
 
         dispatch(containerSlice.actions.titleQuestion({ title: e.target.value, description: description }))
     }
-    const handleDescription = (e) => {
+    const handleDescription = (e: any) => {
         setDescription(e.target.value)
 
         dispatch(containerSlice.actions.titleQuestion({ title: inputTitle, description: e.target.value }))

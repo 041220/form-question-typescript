@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { QuestionList } from "../type";
 
 // const saveQuestionsToStorage = (questions, title, description) => {
 //     try {
@@ -7,15 +8,15 @@ import { createSlice } from "@reduxjs/toolkit";
 
 //     }
 // }
+const initialState: QuestionList = {
+    title: '',
+    description: '',
+    questions: [],
+}
 
 const containerSlice = createSlice({
     name: 'questionList',
-    initialState: {
-        title: '',
-        description: '',
-        questions: [],
-    }
-    ,
+    initialState,
     reducers: {
         titleQuestion: (state, action) => {
             state.title = action.payload.title;
@@ -23,13 +24,13 @@ const containerSlice = createSlice({
             // saveQuestionsToStorage(state.questions, state.title, state.description)
 
         },
-        addNewQuestion: (state, action) => {
+        addNewQuestion: (state: any, action: any) => {
             state.questions.push(action.payload)
             // saveQuestionsToStorage(state.questions)
         },
-        editQuestion: (state, action) => {
+        editQuestion: (state: any, action: any) => {
             // console.log("action.payload:", action.payload);
-            state.questions = state.questions.map((item) => {
+            state.questions = state.questions.map((item: any) => {
                 console.log("item", item);
                 return (
                     item.id === action.payload.id
@@ -40,24 +41,24 @@ const containerSlice = createSlice({
             // saveQuestionsToStorage(state.questions)
         },
 
-        deleteQuestion: (state, action) => {
-            let currentQuestion = state.questions.filter(question => question.id !== action.payload)
+        deleteQuestion: (state: any, action: any) => {
+            let currentQuestion = state.questions.filter((question: any) => question.id !== action.payload)
             state.questions = currentQuestion;
             // saveQuestionsToStorage(state.questions)
         },
-        resetForm: (state) => {
+        resetForm: (state: any) => {
             state.title = ''
             state.description = ''
             state.questions = []
         },
-        getData: (state, action) => {
+        getData: (state: any, action: any) => {
             console.log(action.payload);
             state.questions = action.payload?.questions;
             state.title = action.payload?.title;
             state.description = action.payload?.description;
 
         },
-      
+
 
     }
 })

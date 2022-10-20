@@ -1,24 +1,36 @@
 import { createSlice } from "@reduxjs/toolkit";
-const saveFormToLocalStorage = (list) => {
+import { QuestionList } from "../type";
+
+export interface FormState {
+    list?: FormList[] | undefined
+}
+export interface FormList {
+    id: string,
+    questionList?: QuestionList | undefined,
+}
+
+const saveFormToLocalStorage = (list: any) => {
     try {
         localStorage.setItem("formList", JSON.stringify(list))
     } catch (error) {
 
     }
 }
+const initialState: FormState = {
+    list: []
+}
+
 const homeSlice = createSlice({
     name: 'formList',
-    initialState: {
-        list: [],
-    },
+    initialState,
     reducers: {
-        addNewForm: (state, action) => {
+        addNewForm: (state: any, action: any) => {
             state.list.push(action.payload)
             saveFormToLocalStorage(state.list)
         },
-        editForm: (state, action) => {
+        editForm: (state: any, action: any) => {
             console.log("action.paylaod2", action.payload);
-            state.list = state.list.map((item) => {
+            state.list = state.list.map((item: { id: string, data: any }) => {
                 return (
                     item.id === action.payload.id
                         ? { ...item, ...action.payload.data }
@@ -28,14 +40,14 @@ const homeSlice = createSlice({
             console.log("state.list", state.list);
             saveFormToLocalStorage(state.list)
         },
-        deleteForm: (state, action) => {
+        deleteForm: (state: any, action: any) => {
             console.log('action.payload:', action.payload);
-            const currentForm = state.list.filter(form => form.id !== action.payload)
+            const currentForm = state.list.filter((form: any) => form.id !== action.payload)
             state.list = currentForm
             saveFormToLocalStorage(state.list)
         },
-        submitForm: (state, action) => {
-            state.list = state.list.map((item) => {
+        submitForm: (state: any, action: any) => {
+            state.list = state.list.map((item: { id: string, data: any }) => {
                 return (
                     item.id === action.payload.id
                         ? { ...item, ...action.payload.data }
@@ -44,7 +56,7 @@ const homeSlice = createSlice({
             })
             saveFormToLocalStorage(state.list)
         },
-        getDataFormLocal: (state, action) => {
+        getDataFormLocal: (state: any, action: any) => {
             state.list = action.payload
             console.log("action.payload:", action.payload);
         }

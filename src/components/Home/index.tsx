@@ -1,5 +1,5 @@
+import React from "react"
 import { Button, Card, CardActions, CardContent, Typography } from "@mui/material";
-import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from 'react-router-dom'
 import homeSlice from "./homeSlice";
@@ -8,9 +8,10 @@ import AddCardIcon from '@mui/icons-material/AddCard';
 import DeleteIcon from '@mui/icons-material/Delete';
 import containerSlice from "../Container/containerSlice";
 
-const Home = () => {
 
-    const list = useSelector(state => state.formList.list) //Lấy data của các form trong store ra
+const Home: React.FC = () => {
+
+    const list = useSelector((state: any) => state.formList.list) //Lấy data của các form trong store ra
 
     const dispatch = useDispatch();
 
@@ -25,18 +26,18 @@ const Home = () => {
         dispatch(containerSlice.actions.resetForm()) //sau khi click vào btn Add Form thì reset lại form
     }
     //View 1 form
-    const handleViewOneForm = (id) => {
+    const handleViewOneForm = (id: string) => {
         navigate(`/edit/${id}`)
     }
-    //Làm 1 bài trong 1 form
-    const handleDoTheTopic = (id) => {
+    //Làm bài trong 1 form
+    const handleDoTheTopic = (id: string) => {
         navigate(`/formInProgress/${id}`)
     }
     //Delete 1 form
-    const handleDeleteForm = (id) => {
+    const handleDeleteForm = (id: string) => {
         dispatch(homeSlice.actions.deleteForm(id))
     }
-    const handleViewAnswers = (id) => {
+    const handleViewAnswers = (id: string) => {
         navigate(`/answers/${id}`)
     }
 
@@ -57,7 +58,7 @@ const Home = () => {
             </div>
 
             {
-                list?.map(form => {
+                list?.map((form: any) => {
                     return (
 
                         <Card style={{ paddingLeft: '40px', paddingBottom: '-20px' }} className="form-list" key={form.id}>

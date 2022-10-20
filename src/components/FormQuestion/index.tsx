@@ -6,11 +6,14 @@ import containerSlice from "../Container/containerSlice";
 import './index.css'
 import AddIcon from '@mui/icons-material/Add';
 import ClearIcon from '@mui/icons-material/Clear';
+import { IProps } from "../type";
+import { Options } from "../type";
 
-const FormQuestion = ({ editId, setEditId, question }) => {
-    const [questionName, setQuestionName] = useState('');
-    const [options, setOptions] = useState([]);
-    const [typeQuestion, setTypeQuestion] = useState('1')
+
+const FormQuestion: React.FC<IProps> = ({ editId, setEditId, question }) => {
+    const [questionName, setQuestionName] = useState<string>('');
+    const [options, setOptions] = useState<Options[]>([]);
+    const [typeQuestion, setTypeQuestion] = useState<string>('1')
 
     const dispatch = useDispatch();
     console.log("checkLOG:", question);
@@ -44,11 +47,11 @@ const FormQuestion = ({ editId, setEditId, question }) => {
         setEditId(undefined)
     }
 
-    const handleQuestionName = (e) => {
+    const handleQuestionName = (e: any) => {
         setQuestionName(e.target.value)
         console.log("questionname: ", e.target.value);
     }
-    const handleChangeTypeQuestion = (e) => {
+    const handleChangeTypeQuestion = (e: any) => {
         setTypeQuestion(e.target.value)
         console.log("type:", e.target.value);
     }
@@ -58,10 +61,10 @@ const FormQuestion = ({ editId, setEditId, question }) => {
 
     }
     //Xóa option trong câu hỏi trắc nghiệm
-    const handleDeleteOption = (key) => {
+    const handleDeleteOption = (key: string) => {
         setOptions(options.filter(option => (option.key !== key)))
     }
-    const handleChangeOption = (key, event) => {
+    const handleChangeOption = (key: string, event: any) => {
         setOptions(options.map(option => (option.key === key
             ? { ...option, name: event.target.value }
             : { ...option }

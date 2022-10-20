@@ -6,11 +6,14 @@ import EditIcon from '@mui/icons-material/Edit';
 import { useDispatch } from "react-redux";
 import containerSlice from "../Container/containerSlice";
 
-
-
-const Question = ({ question, editId, setEditId, index }) => {
+interface PropsType {
+    question: any,
+    setEditId: (value: string | undefined) => void,
+    index: number,
+}
+const Question: React.FC<PropsType> = ({ question, setEditId, index }) => {
     const [questionName, setQuestionName] = useState('');
-    const [typeQuestion, setTypeQuestion] = useState('1');
+    const [typeQuestion, setTypeQuestion] = useState<string>('1');
 
 
     const dispatch = useDispatch();
@@ -21,7 +24,7 @@ const Question = ({ question, editId, setEditId, index }) => {
         setTypeQuestion(question.type)
     }, [question])
     // Delete 1 question 
-    const handleDeleteQuestion = (id) => {
+    const handleDeleteQuestion = (id: string) => {
         console.log("check id: ", id);
         dispatch(containerSlice.actions.deleteQuestion(id))
     }
@@ -38,7 +41,7 @@ const Question = ({ question, editId, setEditId, index }) => {
                     <FormControl>
                         <RadioGroup >
                             {
-                                question.options.map((option) => (
+                                question.options.map((option: { key: string, name: string }) => (
                                     <div className="option" key={option.key}>
                                         <FormControlLabel control={<Radio />} value={option.key} label={option.name} />
                                     </div>
@@ -52,7 +55,7 @@ const Question = ({ question, editId, setEditId, index }) => {
         }
     }
 
-    const handleChangeEditId = (id) => {
+    const handleChangeEditId = (id: string) => {
         setEditId(id)
     }
 
